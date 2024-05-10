@@ -1,0 +1,5 @@
+streamlit
+sec-edgar-downloader
+typing
+bs4
+matplotlib
