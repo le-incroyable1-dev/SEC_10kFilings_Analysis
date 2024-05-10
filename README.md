@@ -10,13 +10,13 @@ The financial data is found by matching "item 8" in an SEC 10K filing. SEC 10K f
 Once the correct section is found, it is stripped off all of its HTML code, punctuations and other unnecessary characters (if any) with the help of BeautifulSoup. This section contains several important information about 
 the financial trajectory of the company. These sections are combined and merged from all of SEC 10K filings from all the available years.
 
-In order to analyze the financial data, I use Anthropic LLM Inference API. This also leaves scope of improvement, where one can possibly use some other API which is more suitable for the current use case. A very specific prompt is submitted to the API which prompts it to generate arrays showing financial trends of revenue, profitability and expense over time. This requires you to have a valid Anthropic API key, but if that's not possible I use a demo result that I received from a previous prompt. This result is stripped off to get all the arrays showing the different trends of costs and profits across time through a generic matching process. This also requires the prompt is good enough to generate the correct format of response majority of the time.
+In order to analyze the financial data, I use Anthropic LLM Inference API (https://www.anthropic.com/api). This also leaves scope of improvement, where one can possibly use some other API which is more suitable for the current use case. A very specific prompt is submitted to the API which prompts it to generate arrays showing financial trends of revenue, profitability and expense over time. This requires you to have a valid Anthropic API key, but if that's not possible I use a demo result that I received from a previous prompt. This result is stripped off to get all the arrays showing the different trends of costs and profits across time through a generic matching process. This also requires the prompt is good enough to generate the correct format of response majority of the time.
 
 Once various data over time has been collected, a line chart is constructing showing the financial trends over time. These kind of visualizations are especially helpful to investors to understand the company from a broader perspective. With few changes, this can be modified to generate different insights according to the requirement.
 
 ## Task 2: Construct and Deploy Simple App
 Owing to the ease of use, and as it clearly satisfies the current use case, the app is deployed with this code as a backend through streamlit and contains very minimal frontend which can be easily improved. However, for more complex use cases any other tech stack may be used.
-https://sec10kfinancialanalysisapp-moj-kradi.streamlit.app/
+(https://sec10kfinancialanalysisapp-moj-kradi.streamlit.app/)
 Sometimes streamlit deployments give unexpected errors, in that case please check these screenshots in the README and let me know of the issue!
 
 
