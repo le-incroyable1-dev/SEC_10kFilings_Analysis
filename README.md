@@ -11,7 +11,7 @@ Sample Information Present in a *Financial Data Section*:
 The *sec-edgar-downloader* (https://sec-edgar-downloader.readthedocs.io/en/latest/) package in Python is used for ease of downloading all the available SEC 10K filings from 1995 to 2023.
 
 ## Task 1.2: Text Analysis
-The financial data is found by matching "item 8" in an SEC 10K filing. SEC 10K filings have a fairly standard format, which allow most, though sometimes not all filings to be cleaned and analyzed. In some cases, due to how the file formats have evolved over time, the function may match incorrectly, and this has scope of improvement. It matches the starting of the required section and that of the next section, and simply extracts the content required.
+The financial data is found by matching "item 8" in an SEC 10K filing. SEC 10K filings have a fairly standard format, which allow some, though not all filings to be cleaned and analyzed. In some cases, due to how the file formats have evolved over time, the function may match incorrectly, and this has scope of improvement. It matches the starting of the required section and that of the next section, and simply extracts the content required.
 
 Once the correct section is found, it is stripped off all of its HTML code, punctuations and other unnecessary characters (if any) with the help of BeautifulSoup. This section contains several important information about the financial trajectory of the company. These sections are combined and merged from all of SEC 10K filings from all the available years.
 
