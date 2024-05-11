@@ -102,15 +102,19 @@ for file in filings:
   if processed == 1:
      break
   print("extracting content from ", file , " .....")
-  content = extract_section(file)
-  all_financial_data += content + "\n"
+  try:
+     content = extract_section(file)
+     all_financial_data += content + ". " 
+  except Exception as e:
+     # This block catches all other exceptions
+     print("An error occurred:", e)  
 
-st.info("Extracted financial data from all files!")
+st.info("Extracted available financial data from all files!")
 
 maxPromptLen = min(199999, len(all_financial_data)) # according to max prompt length for request
 st.info("Fitting Data into the Maximum Prompt Length")
 all_financial_data = all_financial_data[:maxPromptLen - 325] # force trim the data to fit in the available limits, change accordingly
-prompt = "\n\nHuman: Here are the financial data sections from sec 10k filings : {} . Give me the revenue, expenses, profitability of the different years mentioned in the data in the form of arrays (array name = array) and an array called years for the years as well. Only return the arrays in the response and no other text. \n\nAssistant:".format(all_financial_data)
+prompt = "\n\nHuman: Here are the financial data sections from sec 10k filings : {} . Give me the revenue, expenses and profitability of the different years mentioned in the data in the form of arrays (array name = array) and an array called years for the years as well. Only return the arrays in the response and no other text. \n\nAssistant:".format(all_financial_data)
 
 processed = 1 # mark processed
 
@@ -136,6 +140,7 @@ while APIKEY == "":
 
 print("APIKEY : ", APIKEY)
 
+st.info("Generating insights from the LLM API....")
 response = requests.post(
     "https://api.anthropic.com/v1/complete",
     headers={
