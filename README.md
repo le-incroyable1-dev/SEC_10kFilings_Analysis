@@ -1,6 +1,12 @@
 # SEC 10K Filings Analysis
 Analyzing revenue, profitability, and expense trends from 10-K filings provides critical insights for stakeholders. These trends offer a snapshot of the company's financial performance and strategic direction over time. Stakeholders can assess growth patterns, operational efficiency, and competitive positioning based on these trends. Additionally, trend analysis informs investment decisions, risk management strategies, and identifies areas for improvement. By understanding the underlying factors driving revenue, profitability, and expense trends, stakeholders can make informed decisions to drive sustainable business growth and mitigate risks.
 
+Sample Information Present in a Financial Data Section: 
+
+![image](https://github.com/le-incroyable1-dev/SEC_10kFilings_Analysis/assets/47893192/b6e8a785-40bb-4351-b49f-574f9cc9a4c8)
+
+
+
 ## Task 1.1: Download Data from the SEC-EDGAR
 The sec-edgar-downloader (https://sec-edgar-downloader.readthedocs.io/en/latest/) package in Python is used for ease of downloading all the available SEC 10K filings from 1995 to 2023.
 
