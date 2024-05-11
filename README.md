@@ -33,5 +33,5 @@ Displaying Demo Visualization:
 ![Screenshot 2024-05-11 020059](https://github.com/le-incroyable1-dev/SEC_10kFilings_Analysis/assets/47893192/0f87807f-a4b2-43f6-9cb6-0ea3dc48e784)
 
 
-
-
+## Possible Extensions
+This project can be extended to provide better API support and more diverse and accurate prompt generation. It can also include scanning and analyzing larger documents to understand and display the primary reasons behind increasing or decreasing trends or sudden changes in profits, revenue etc.
