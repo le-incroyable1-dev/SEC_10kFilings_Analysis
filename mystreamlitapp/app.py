@@ -106,6 +106,12 @@ for file in filings:
   all_financial_data += content + "\n"
 
 st.info("Extracted financial data from all files!")
+
+maxPromptLen = min(199999, len(all_financial_data)) # according to max prompt length for request
+st.info("Fitting Data into the Maximum Prompt Length")
+all_financial_data = all_financial_data[:maxPromptLen - 325] # force trim the data to fit in the available limits, change accordingly
+prompt = "\n\nHuman: Here are the financial data sections from sec 10k filings : {} . Give me the revenue, expenses, profitability of the different years mentioned in the data in the form of arrays (array name = array) and an array called years for the years as well. Only return the arrays in the response and no other text. \n\nAssistant:".format(all_financial_data)
+
 processed = 1 # mark processed
 
   # post a request to anthropic to get the insights from the extracted sections
@@ -121,7 +127,7 @@ APIKEY = ""
 if OPTION == "1":
    APIKEY = streamlit.text_input("Enter an ANTHROPIC API Key with Credits (Can get 5$ of credits for free) : ", "")
 elif OPTION == "0":
-   APIKEY = "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"
+   APIKEY = "xyz"
 else:
    sys.exit()
    
@@ -140,7 +146,7 @@ response = requests.post(
     },
     json={
         "model": "claude-2.1",
-        "prompt": "\n\nHuman: Here is the financial data section from sec 10k filings : {}. Give me the revenue, expenses and profitability of different years mentioned in the data in the form of arrays and an array called years for the years also.\n\nAssistant:".format(all_financial_data),
+        "prompt": "{}".format(prompt),
         "max_tokens_to_sample": 2000
     }
 )
