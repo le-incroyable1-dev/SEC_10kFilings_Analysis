@@ -10,22 +10,45 @@ import json
 import ast
 import time
 import sys
+from sec_edgar_downloader import Downloader
+
+user_input = ""
+user_input = streamlit.text_input("Enter the company ticker to analyze financial trends : ", "")
+while user_input == "":
+   time.sleep(2)
+
+APIKEY = ""
+OPTION = ""
+processed = 0
+companies = []
+companies.append(user_input)
+
+OPTION = ""
+st.info("Currently the app runs on Anthropic API, can be extended in the future!")
+OPTION = streamlit.text_input("Enter 1 if you have a valid Anthropic Api Key or enter 0 to display a demo from GOOGL : ", "")
+while OPTION == "":
+   time.sleep(2)
+
+print("OPTION : ", OPTION)
+
+APIKEY = ""
+if OPTION == "1":
+   APIKEY = streamlit.text_input("Enter an ANTHROPIC API Key with Credits (Can get 5$ of credits for free) : ", "")
+elif OPTION == "0":
+   APIKEY = "xyz"
+else:
+   sys.exit()
+   
+while APIKEY == "":
+   time.sleep(2)
+
+print("APIKEY : ", APIKEY)
 
 save_dir = './sec_filings'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
 filings = []
-
-from sec_edgar_downloader import Downloader
-
-user_input = ""
-user_input = streamlit.text_input("Enter the company ticker to analyze financial trends : ", "")
-companies = []
-companies.append(user_input)
-
-while user_input == "":
-   time.sleep(5)
 
 start_year = 1995
 end_year = 2023
@@ -97,6 +120,7 @@ def extract_section(file_path: str) -> Optional[str]:
 
     return section_content
 
+st.info("Extracting financial data...")
 all_financial_data = ""
 for file in filings:
   if processed == 1:
@@ -114,32 +138,11 @@ st.info("Extracted available financial data from all files!")
 maxPromptLen = min(199999, len(all_financial_data)) # according to max prompt length for request
 st.info("Fitting Data into the Maximum Prompt Length")
 all_financial_data = all_financial_data[:maxPromptLen - 325] # force trim the data to fit in the available limits, change accordingly
-prompt = "\n\nHuman: Here are the financial data sections from sec 10k filings : {} . Give me the revenue, expenses and profitability of the different years mentioned in the data in the form of arrays (array name = array) and an array called years for the years as well. Only return the arrays in the response and no other text. \n\nAssistant:".format(all_financial_data)
+prompt = "\n\nHuman: Here are the financial data sections from sec 10k filings : {} . Give me the revenue, expenses and profits of the different years mentioned in the data in the form of arrays (array name = array) and an array called years for the years as well. Only return the arrays in the response and no other text. \n\nAssistant:".format(all_financial_data)
 
 processed = 1 # mark processed
 
   # post a request to anthropic to get the insights from the extracted sections
-OPTION = ""
-st.info("Currently the app runs on Anthropic API, can be extended in the future!")
-OPTION = streamlit.text_input("Enter 1 if you have a valid Anthropic Api Key or enter 0 to display a demo from GOOGL : ", "")
-while OPTION == "":
-   time.sleep(5)
-
-print("OPTION : ", OPTION)
-
-APIKEY = ""
-if OPTION == "1":
-   APIKEY = streamlit.text_input("Enter an ANTHROPIC API Key with Credits (Can get 5$ of credits for free) : ", "")
-elif OPTION == "0":
-   APIKEY = "xyz"
-else:
-   sys.exit()
-   
-while APIKEY == "":
-   time.sleep(5)
-
-print("APIKEY : ", APIKEY)
-
 st.info("Generating insights from the LLM API....")
 response = requests.post(
     "https://api.anthropic.com/v1/complete",
@@ -158,10 +161,19 @@ response = requests.post(
 print("RESPONSE : ", response)
 data_dict = json.loads(response.text)
 
+# reset all decision variables
+user_input = ""
+APIKEY = ""
+OPTION = ""
+processed = 0
+
 result = ""
 if "completion" not in data_dict:
+    # use sample result
+   st.info("Error in LLM API Response! Displaying demo result. Please try again!") 
    result = "Here are the revenue, expenses, cost of revenue, operating income, net income, and years in array form based on the financial data provided: ```js const revenues = [182527, 257637, 282836]; const expenses = [141303, 178923, 207994];  const costOfRevenues = [84732, 110939, 126203]; const operatingIncome = [41224, 78714, 74842]; const netIncome = [40269, 76033, 59972]; const years = [2020, 2021, 2022]; ```"
 else:
+   st.info("Insights generated from LLM API!")
    result = data_dict["completion"]
 
 def find_indexes(text):
@@ -227,4 +239,7 @@ plt.tight_layout()
 streamlit.pyplot()
 
 
-st.info("Thanks for stopping by :)")
+st.info("Thanks for stopping by :) Please let me know of any issues.")
+
+time.sleep(5)
+sys.exit()
