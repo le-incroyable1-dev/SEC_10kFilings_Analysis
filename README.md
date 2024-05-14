@@ -35,4 +35,4 @@ Displaying Demo Visualization:
 
 
 ## Possible Extensions
-This project can be extended to provide better API support and more diverse and accurate prompt generation. It can also include scanning and analyzing larger documents to understand and display the primary reasons behind increasing or decreasing trends or sudden changes in profits, revenue etc.
+This project can be extended to provide better API support and more diverse and accurate prompt generation to capture better information from the LLM API. It can also include scanning and analyzing larger documents to understand and display the primary reasons behind increasing or decreasing trends or sudden changes in profits, revenue etc.
